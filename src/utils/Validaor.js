@@ -23,6 +23,14 @@ const validators = {
       throw new Error(ERROR_MESSAGES.INVALID_INPUT);
     }
   },
+
+  checkCoachDontListLength(arr) {
+    if (arr.length > 2) {
+      //Console.print(arr.length);
+      Console.print("메뉴 수 이상");
+      throw new Error(ERROR_MESSAGES.INVALID_INPUT);
+    }
+  },
 };
 
 export default validators;
