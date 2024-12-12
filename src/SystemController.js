@@ -1,26 +1,27 @@
+import CoachModel from "./models/CoachModel.js";
 import InputView from "./views/Inputview.js";
 import { Console } from "@woowacourse/mission-utils";
 
 class SystemController {
   #inputView;
+  #coachModel;
 
   constructor() {
     this.#inputView = new InputView();
+    this.#coachModel = new CoachModel();
   }
 
   async start() {
-    await this.handleMonthDay();
+    await this.handleCoachList();
   }
 
-  async handleMonthDay() {
-    while (true) {
-      try {
-        const info = await this.#inputView.getMonthDay();
-        this.#onCallModel.parseMonthDate(info);
-        return info; // 유효한 경우 반환
-      } catch (e) {
-        Console.print(e); // 에러 메시지 출력
-      }
+  async handleCoachList() {
+    try {
+      const coachList = await this.#inputView.getCoachList();
+      this.#coachModel.parseCoachList(coachList);
+      Console.print(this.#coachModel.getAllCoachInfo());
+    } catch (e) {
+      Console.print(e.message); // 에러 메시지 출력
     }
   }
 }

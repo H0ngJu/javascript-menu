@@ -1,9 +1,9 @@
-class OnCallInfo {
-  constructor(date, day, name) {
-    this.date = date;
+class CoachInfo {
+  constructor(name, dont, recommend) {
     this.name = name;
-    this.day = day;
+    this.dont = dont;
+    this.recommend = recommend;
   }
 }
 
-export default OnCallInfo;
+export default CoachInfo;

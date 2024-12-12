@@ -9,22 +9,15 @@ const validators = {
     }
   },
 
-  checkDateInput(input) {
-    const arr = ["월", "화", "수", "목", "금", "토", "일"];
-    if (!arr.includes(input)) {
-      throw new Error(ERROR_MESSAGES.INVALID_INPUT); // 유효하지 않은 요일
-    }
-  },
-
   checkNameLength(name) {
-    if (name.length > 5) {
+    if (name.length > 4 || name.length < 2) {
       //Console.print("이름 수 이상");
       throw new Error(ERROR_MESSAGES.INVALID_INPUT);
     }
   },
 
-  checkListLength(arr) {
-    if (arr.length < 5 || arr.length > 35) {
+  checkCoachListLength(arr) {
+    if (arr.length < 2) {
       //Console.print(arr.length);
       //Console.print("명 수 이상");
       throw new Error(ERROR_MESSAGES.INVALID_INPUT);

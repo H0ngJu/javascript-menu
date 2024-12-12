@@ -4,10 +4,10 @@ class App {
   #systemController;
 
   constructor() {
-    this.systemController = new SystemController();
+    this.#systemController = new SystemController();
   }
   async run() {
-    await this.systemController.start();
+    await this.#systemController.start();
   }
 }
 
