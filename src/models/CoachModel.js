@@ -10,12 +10,10 @@ class CoachModel {
     this.coachList = [];
   }
 
-  updateMonth(value) {
-    this.month = value;
-  }
-
-  getMonth() {
-    return this.month;
+  updateMenu(menu, idx) {
+    //Console.print(`recommend 넣기 전 ${this.coachList[idx].recommend}`);
+    this.coachList[idx].recommend.push(menu);
+    //Console.print(`recommend 넣은 후 ${this.coachList[idx].recommend}`);
   }
 
   parseCoachList(arr) {
@@ -64,6 +62,22 @@ class CoachModel {
       throw new Error(ERROR_MESSAGES.INVALID_INPUT);
     }
     seenNames.add(name); // Set에 이름 추가
+  }
+
+  isDontMenu(menu, idx) {
+    //Console.print(this.coachList[idx]);
+    //Console.print(this.coachList[idx].dont);
+    if (this.coachList[idx].dont.includes(menu)) {
+      return true;
+    }
+    return false;
+  }
+
+  isSameMenu(menu, idx) {
+    if (this.coachList[idx].recommend.includes(menu)) {
+      return true;
+    }
+    return false;
   }
 
   getAllCoachInfo() {

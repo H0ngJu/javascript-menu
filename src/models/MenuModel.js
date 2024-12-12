@@ -8,6 +8,18 @@ import { INFO } from "../constants/Info.js";
 class MenuModel {
   constructor(categoryList) {
     this.categoryList = [];
+    this.menuList = [];
+  }
+
+  parseMenu() {
+    for (let i = 0; i < 5; i++) {
+      // 일단 5번 시행함
+      const items = INFO[Object.keys(INFO)[i]].split(",");
+
+      const trimmedItems = items.map((item) => item.trim());
+
+      this.menuList.push(trimmedItems);
+    }
   }
 
   makeCategoryList() {
@@ -23,6 +35,17 @@ class MenuModel {
     }
   }
 
+  pickMenuOne(categoryIdx) {
+    const menuLength = this.menuList[categoryIdx].length;
+    const menuIdx = MissionUtils.Random.pickUniqueNumbersInRange(
+      0,
+      menuLength - 1,
+      1
+    );
+    const menu = this.menuList[categoryIdx][menuIdx];
+    return menu;
+  }
+
   pickCategory() {
     const idx = MissionUtils.Random.pickUniqueNumbersInRange(0, 4, 1);
     return Object.keys(INFO)[idx];
@@ -30,6 +53,10 @@ class MenuModel {
 
   getAllCategoryInfo() {
     return this.categoryList;
+  }
+
+  getAllMenuInfo() {
+    return this.menuList;
   }
 }
 
