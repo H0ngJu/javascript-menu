@@ -3,16 +3,19 @@ import CoachModel from "./models/CoachModel.js";
 import MenuMdoel from "./models/MenuModel.js";
 import InputView from "./views/Inputview.js";
 import { Console } from "@woowacourse/mission-utils";
+import OutputView from "./views/OutputView.js";
 
 class SystemController {
   #inputView;
   #coachModel;
   #menuModel;
+  #outputView;
 
   constructor() {
     this.#inputView = new InputView();
     this.#coachModel = new CoachModel();
     this.#menuModel = new MenuMdoel();
+    this.#outputView = new OutputView();
   }
 
   async start() {
@@ -22,6 +25,7 @@ class SystemController {
     await this.handleCoachDont(coachInfo);
     await this.handleCategory();
     await this.handleRecommend(coachLength);
+    await this.handleOutput();
   }
 
   async handleCoachList() {
@@ -69,7 +73,7 @@ class SystemController {
         // 메뉴를 코치에게 전달한다.
         //Console.print(`==========${menu}`);
         this.#coachModel.updateMenu(menu, j);
-        Console.print(this.#coachModel.getAllCoachInfo());
+        //Console.print(this.#coachModel.getAllCoachInfo());
       }
     }
   }
@@ -86,6 +90,17 @@ class SystemController {
     }
 
     return menu;
+  }
+
+  async handleOutput() {
+    this.#outputView.print_header();
+    const coachInfo = this.#coachModel.getAllCoachInfo();
+    const categoryList = this.#menuModel.getAllCategoryInfo();
+    this.#outputView.print_category(categoryList);
+    for (let i = 0; i < coachInfo.length; i++) {
+      this.#outputView.print_menu(coachInfo[i].name, coachInfo[i].recommend);
+    }
+    this.#outputView.print_finish();
   }
 }
 

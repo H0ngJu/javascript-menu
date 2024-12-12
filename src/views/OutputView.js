@@ -1,25 +1,39 @@
 import { Console } from "@woowacourse/mission-utils";
 import { SYSTEM_MESSAGES } from "../constants/SystemMessage.js";
-import { ERROR_MESSAGES } from "../constants/ErrorMessages.js";
-import validators from "../utils/Validator.js";
 
 class OutputView {
-  printOrderList(orderList, date) {
-    Console.print(SYSTEM_MESSAGES.pirntDateMessage(date));
-    Console.print(SYSTEM_MESSAGES.ORDER_LIST_MESSAGE);
-    // 각 주문 항목 출력
-    orderList.forEach((order) => {
-      const message = SYSTEM_MESSAGES.printOrderMessage(
-        order.name,
-        order.quantity
-      );
-      Console.print(message);
-    });
+  print_header() {
+    Console.print(SYSTEM_MESSAGES.SHOW_RESULT_MESSAGE);
   }
 
-  printBeforeBenefit(value) {
-    Console.print(SYSTEM_MESSAGES.BEFORE_BENEFIT_PRICE_MESSAGE);
-    Console.print(SYSTEM_MESSAGES.printBeforeBenefitPrice(value));
+  print_finish() {
+    Console.print(SYSTEM_MESSAGES.FINISH_MESSAGE);
+  }
+
+  // 이거 체크하기 !!!!!!!!!!!!!!!!!!!
+  print_category(arr) {
+    Console.print(
+      SYSTEM_MESSAGES.print_result_category(
+        arr[0],
+        arr[1],
+        arr[2],
+        arr[3],
+        arr[4]
+      )
+    );
+  }
+
+  print_menu(name, arr) {
+    Console.print(
+      SYSTEM_MESSAGES.print_result_menu(
+        name,
+        arr[0],
+        arr[1],
+        arr[2],
+        arr[3],
+        arr[4]
+      )
+    );
   }
 }
 
