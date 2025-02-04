@@ -79,17 +79,19 @@ class SystemController {
   }
 
   async handleEachRecommend(idx) {
-    const menu = await this.#menuModel.pickMenuOne(idx); // 카테고리에서 메뉴 하나 뽑음
-    // 중복되지도 않고, 못먹는 메뉴가 아니라면 메뉴를 반환한다.
-    if (this.#coachModel.isDontMenu(menu, idx)) {
-      this.handleEachRecommend(idx); // 다시 요청한다.
-    }
+    while (true) {
+      const menu = await this.#menuModel.pickMenuOne(idx); // 카테고리에서 메뉴 하나 뽑음
 
-    if (this.#coachModel.isSameMenu(menu, idx)) {
-      this.handleEachRecommend(idx); // 다시 요청한다.
-    }
+      // 조건에 부합하지 않으면 루프 반복
+      if (
+        this.#coachModel.isDontMenu(menu, idx) ||
+        this.#coachModel.isSameMenu(menu, idx)
+      ) {
+        continue;
+      }
 
-    return menu;
+      return menu; // 조건을 충족하면 메뉴 반환
+    }
   }
 
   async handleOutput() {
@@ -97,9 +99,12 @@ class SystemController {
     const coachInfo = this.#coachModel.getAllCoachInfo();
     const categoryList = this.#menuModel.getAllCategoryInfo();
     this.#outputView.print_category(categoryList);
-    for (let i = 0; i < coachInfo.length; i++) {
-      this.#outputView.print_menu(coachInfo[i].name, coachInfo[i].recommend);
-    }
+    coachInfo.forEach((person) => {
+      this.#outputView.print_menu(person.name, person.recommend);
+    });
+    // for (let i = 0; i < coachInfo.length; i++) {
+    //   this.#outputView.print_menu(coachInfo[i].name, coachInfo[i].recommend);
+    // }
     this.#outputView.print_finish();
   }
 }

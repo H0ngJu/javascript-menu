@@ -34,22 +34,22 @@ class CoachModel {
       throw new Error(ERROR_MESSAGES.INVALID_INPUT);
     }
   }
-
   parseCoachDontList(arr, coachName) {
     try {
-      const items = arr.split(","); // ','로 코치 분리
+      const items = arr.split(",").map((item) => item.trim()); // ','로 분리하고 공백 제거
       validators.checkCoachDontListLength(items); // 메뉴 수 확인
+
       const seenNames = new Set(); // 중복 체크 용 set
+      items.forEach((item) => {
+        if (seenNames.has(item)) {
+          throw new Error(`[ERRPR] 중복된 이름이 있습니다.`);
+        }
+        seenNames.add(item);
+      });
+
       const coach = this.coachList.find((person) => person.name === coachName);
-      // 코치랑 이름 같은 사람을 찾아서 coach에 저장하고,
 
-      //const parseDontList = items.map((item) => {
-      //  const name = item;
-      //  const trimmedName = name.trim(); // 이름의 공백 제거
-      //  this.hasDuplicateName(trimmedName, seenNames); // 중복된 이름 있는지 확인
-      //});
-
-      coach.dont = coach.dont.concat(items); // 각 요소 추가하는 법 찾아보기!!!!!!!!!!!!!!!!!
+      coach.dont.push(...items); // 배열에 요소를 추가
     } catch (e) {
       throw new Error(e);
     }
